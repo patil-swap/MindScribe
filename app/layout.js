@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Oxygen } from "next/font/google";
+import Provider from "./provider";
 
 export const metadata = {
   title: "Create Next App",
@@ -11,7 +12,9 @@ const oxygen = Oxygen({ weight: "400", subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={oxygen.className}>{children}</body>
+      <body className={oxygen.className}>
+        <Provider>{children}</Provider>
+      </body>
     </html>
   );
 }
