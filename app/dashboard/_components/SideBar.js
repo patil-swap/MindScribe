@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Layout, ShieldPlus } from "lucide-react";
 import Image from "next/image";
 import React from "react";
+import UploadPdfDialog from "./UploadPdfDialog";
 
 const SideBar = () => {
   return (
@@ -17,7 +18,9 @@ const SideBar = () => {
         <span className="text-2xl">MindScribe</span>
       </div>
       <div className="mt-10">
-        <Button className="w-full">Upload PDF</Button>
+        <UploadPdfDialog>
+          <Button className="w-full">Upload PDF</Button>
+        </UploadPdfDialog>
         <div className="flex gap-2 items-center p-3 mt-3 hover:bg-slate-100 rounded-lg cursor-pointer">
           <Layout />
           <h2>Workspace</h2>
