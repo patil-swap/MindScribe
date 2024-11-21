@@ -5,6 +5,7 @@ import WorkspaceHeader from "../_components/WorkspaceHeader";
 import PdfViewer from "../_components/PdfViewer";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import TextEditor from "../_components/TextEditor";
 
 const Workspace = () => {
   const { fileId } = useParams();
@@ -16,7 +17,9 @@ const Workspace = () => {
     <div>
       <WorkspaceHeader />
       <div className="grid grid-cols-2 gap-2">
-        <div></div>
+        <div>
+          <TextEditor />
+        </div>
         <div>
           <PdfViewer fileUrl={fileInfo?.fileUrl} />
         </div>
