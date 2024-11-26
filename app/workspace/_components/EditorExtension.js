@@ -1,3 +1,6 @@
+import { chatSession } from "@/configs/AIModels";
+import { api } from "@/convex/_generated/api";
+import { useAction } from "convex/react";
 import {
   AlignCenter,
   AlignLeft,
@@ -15,11 +18,50 @@ import {
   Strikethrough,
   Subscript,
   Superscript,
-  Underline
+  Underline,
+  WandSparkles
 } from "lucide-react";
+import { useParams } from "next/navigation";
 import React, { useCallback } from "react";
 
 const EditorExtension = ({ editor }) => {
+  const searchAction = useAction(api.myAction.search);
+  const { fileId } = useParams();
+
+  const onAIClick = async () => {
+    const selectedText = editor.state.doc.textBetween(
+      editor.state.selection.from,
+      editor.state.selection.to,
+      " "
+    );
+    const result = await searchAction({
+      query: selectedText,
+      fileId: fileId
+    });
+    const parsedResult = JSON.parse(result);
+    let unformattedAnswer = "";
+    parsedResult &&
+      parsedResult.forEach((item) => {
+        unformattedAnswer = unformattedAnswer + item.pageContent;
+      });
+
+    const PROMPT =
+      "For question: " +
+      selectedText +
+      "and with the given content as answer" +
+      "please format just the answer in HTML. The answer content is: " +
+      unformattedAnswer;
+    const AIResult = await chatSession.sendMessage(PROMPT);
+    const formattedAnswer = AIResult.response
+      .text()
+      .replaceAll("```", "")
+      .replace("html", "");
+
+    const allText = editor.getHTML();
+    editor.commands.setContent(
+      allText + "<p> <strong>Answer: </strong>" + formattedAnswer + "</p>"
+    );
+  };
   const addImage = useCallback(() => {
     const url = window.prompt("URL");
 
@@ -35,7 +77,7 @@ const EditorExtension = ({ editor }) => {
     editor && (
       <div className="p-5">
         <div className="control-group">
-          <div className="button-group flex gap-3">
+          <div className="button-group flex gap-2 overflow-auto">
             <button
               onClick={() =>
                 editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -154,6 +196,12 @@ const EditorExtension = ({ editor }) => {
               className={editor.isActive("superscript") ? "text-blue-500" : ""}
             >
               <Superscript />
+            </button>
+            <button
+              onClick={() => onAIClick()}
+              className={"hover:text-purple-700"}
+            >
+              <WandSparkles />
             </button>
           </div>
         </div>
