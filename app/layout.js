@@ -2,6 +2,7 @@ import "./globals.css";
 import { Oxygen } from "next/font/google";
 import Provider from "./provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "MindScribe",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body className={oxygen.className}>
           <Provider>{children}</Provider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

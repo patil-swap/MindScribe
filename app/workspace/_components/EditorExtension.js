@@ -23,12 +23,14 @@ import {
 } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useCallback } from "react";
+import { toast } from "sonner";
 
 const EditorExtension = ({ editor }) => {
   const searchAction = useAction(api.myAction.search);
   const { fileId } = useParams();
 
   const onAIClick = async () => {
+    toast("AI is loading your answer, please wait patiently!");
     const selectedText = editor.state.doc.textBetween(
       editor.state.selection.from,
       editor.state.selection.to,
@@ -56,6 +58,8 @@ const EditorExtension = ({ editor }) => {
       .text()
       .replaceAll("```", "")
       .replace("html", "");
+
+    console.log(formattedAnswer);
 
     const allText = editor.getHTML();
     editor.commands.setContent(

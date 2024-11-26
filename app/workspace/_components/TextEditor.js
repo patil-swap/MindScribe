@@ -22,9 +22,9 @@ const TextEditor = () => {
   });
 
   return (
-    <div>
+    <div className="bg-gray-700 text-white">
       <EditorExtension editor={editor} />
-      <div>
+      <div className="overflow-scroll h-[88vh]">
         <EditorContent editor={editor} />
       </div>
     </div>
