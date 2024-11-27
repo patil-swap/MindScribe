@@ -1,6 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
 import WorkspaceHeader from "../_components/WorkspaceHeader";
 import PdfViewer from "../_components/PdfViewer";
 import { useQuery } from "convex/react";
@@ -18,7 +18,7 @@ const Workspace = () => {
       <WorkspaceHeader fileName={fileInfo?.fileName} />
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <TextEditor />
+          <TextEditor fileId={fileId} />
         </div>
         <div>
           <PdfViewer fileUrl={fileInfo?.fileUrl} />

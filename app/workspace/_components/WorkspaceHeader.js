@@ -4,7 +4,7 @@ import React from "react";
 
 const WorkspaceHeader = ({ fileName }) => {
   return (
-    <div className="p-4 flex justify-between">
+    <div className="p-4 flex justify-between shadow-md">
       <Image
         src={"/mindscribe.svg"}
         alt="MindScribe Logo"
@@ -12,7 +12,7 @@ const WorkspaceHeader = ({ fileName }) => {
         height={60}
         className="rounded-full"
       />
-      <span className="text-3xl text-bold">{fileName}</span>
+      <h2 className="text-3xl text-bold">{fileName}</h2>
       <UserButton />
     </div>
   );
