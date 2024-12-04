@@ -1,10 +1,18 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Layout, ShieldPlus } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import UploadPdfDialog from "./UploadPdfDialog";
+import { useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const SideBar = () => {
+  const { user } = useUser();
+  const fileList = useQuery(api.fileStorage.getUserFiles, {
+    userEmail: user?.primaryEmailAddress?.emailAddress
+  });
   return (
     <div className="shadow-md h-screen p-2">
       <div className="flex flex-row gap-2 items-center justify-center">
@@ -31,7 +39,7 @@ const SideBar = () => {
         </div>
       </div>
       <div className="absolute bottom-20 w-[85%]">
-        <p className="text-lg text-center">Uploaded 5 PDFs</p>
+        <p className="text-lg text-center">Uploaded {fileList?.length} PDFs</p>
         <p className="text-sm mt-2 text-center">
           Upgrade to upload unlimited PDFs
         </p>

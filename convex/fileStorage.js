@@ -48,3 +48,20 @@ export const getFileRecord = query({
     return result[0];
   }
 });
+
+export const getUserFiles = query({
+  args: {
+    userEmail: v.optional(v.string())
+  },
+  handler: async (ctx, args) => {
+    if (!args?.userEmail) {
+      return;
+    }
+
+    const result = await ctx.db
+      .query("files")
+      .filter((q) => q.eq(q.field("createdBy"), args?.userEmail))
+      .collect();
+    return result;
+  }
+});
